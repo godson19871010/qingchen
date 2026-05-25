@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar, Shield, ClipboardList, MapPin, Hexagon } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { motion } from 'motion/react';
 
 interface PanelProps {
   title: string;
@@ -12,7 +13,13 @@ interface PanelProps {
 
 function Panel({ title, icon, children, className, actions }: PanelProps) {
   return (
-    <div className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}>
+    <motion.div 
+      variants={{
+        hidden: { opacity: 0, x: -30 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.1, delayChildren: 0.2 } }
+      }}
+      className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}
+    >
       
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
@@ -49,9 +56,14 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       <div className="relative z-20 flex-1 overflow-auto px-4 pb-4 pt-1 custom-scrollbar">
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 }
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+};
 
 export function LeftSidebar() {
   const dutyList = [
@@ -72,7 +84,21 @@ export function LeftSidebar() {
   ];
 
   return (
-    <div className="absolute left-6 top-[95px] z-10 flex h-[calc(100vh-110px)] w-[360px] flex-col gap-4 pb-4">
+    <motion.div 
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.3
+          }
+        }
+      }}
+      className="absolute left-6 top-[95px] z-10 flex h-[calc(100vh-110px)] w-[360px] flex-col gap-4 pb-4"
+    >
       
       {/* 勤务状态 (Duty Status) */}
       <Panel title="勤务状态" icon={<Shield size={14} strokeWidth={2.5}/>}>
@@ -85,14 +111,14 @@ export function LeftSidebar() {
         </div>
         <div className="flex flex-col gap-3 font-medium">
           {dutyList.map((duty, idx) => (
-            <div key={idx} className="flex items-center text-sm text-slate-300">
+            <motion.div variants={itemVariants} key={idx} className="flex items-center text-sm text-slate-300">
               <div className="flex w-28 items-center gap-2">
                 <div className={cn("h-2 w-2 rounded-full shadow-[0_0_6px_currentColor]", duty.color, duty.color.replace('bg-', 'text-'))} />
                 <span className="text-slate-400">{duty.role}</span>
               </div>
               <div className="flex-1 text-slate-100">{duty.name}</div>
               <div className="w-8 text-right text-slate-500/40">--</div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </Panel>
@@ -122,7 +148,7 @@ export function LeftSidebar() {
           </thead>
           <tbody className="font-medium">
             {tasks.map((task, idx) => (
-              <tr key={idx} className="border-b border-slate-600/20 last:border-0 hover:bg-white/5 transition-colors">
+              <motion.tr variants={itemVariants} key={idx} className="border-b border-slate-600/20 last:border-0 hover:bg-white/5 transition-colors">
                 <td className="py-3 text-left text-slate-400/80">{task.level}</td>
                 <td className="py-3 text-blue-100">{task.total}</td>
                 <td className="py-3 text-blue-400">{task.done}</td>
@@ -130,7 +156,7 @@ export function LeftSidebar() {
                 <td className="py-3">{task.h24}</td>
                 <td className="py-3">{task.h72}</td>
                 <td className="py-3 pr-1 text-right">{task.overdue}</td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
@@ -153,7 +179,7 @@ export function LeftSidebar() {
             { name: '水门渔港巡逻队', desc: '水门渔港东海岸线', time: '2026-05-14 08:00:00' },
             { name: '金沙湾巡逻队', desc: '金沙湾景区及周边道路', time: '2026-05-14 09:30:00' },
           ].map((patrol, idx) => (
-            <div key={idx} className="group flex items-center justify-between rounded border border-blue-500/20 bg-gradient-to-r from-blue-900/30 to-transparent p-3 hover:border-blue-400/40 transition-colors">
+            <motion.div variants={itemVariants} key={idx} className="group flex items-center justify-between rounded border border-blue-500/20 bg-gradient-to-r from-blue-900/30 to-transparent p-3 hover:border-blue-400/40 transition-colors">
               <div className="flex gap-3">
                 <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 border border-slate-600 text-blue-400 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.3)] group-hover:border-blue-500/50 transition-all">
                   <Shield size={16} />
@@ -165,11 +191,11 @@ export function LeftSidebar() {
                 </div>
               </div>
               <div className="text-[13px] font-semibold text-blue-400 drop-shadow-[0_0_5px_rgba(59,130,246,0.5)]">进行中</div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </Panel>
 
-    </div>
+    </motion.div>
   );
 }

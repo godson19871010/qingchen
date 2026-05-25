@@ -2,6 +2,7 @@ import React from 'react';
 import { ShieldAlert, Bell, ChevronDown, RefreshCcw, Hexagon } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { cn } from '../lib/utils';
+import { motion } from 'motion/react';
 
 interface PanelProps {
   title: string;
@@ -40,7 +41,13 @@ const Custom3DBar = (props: any) => {
 
 function Panel({ title, icon, children, className, actions }: PanelProps) {
   return (
-    <div className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}>
+    <motion.div 
+      variants={{
+        hidden: { opacity: 0, x: 30 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.1, delayChildren: 0.2 } }
+      }}
+      className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}
+    >
       
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
@@ -77,9 +84,14 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       <div className="relative z-20 flex-1 overflow-auto px-4 pb-4 pt-1 custom-scrollbar">
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 }
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+};
 
 export function RightSidebar() {
   const chartData = [
@@ -128,7 +140,21 @@ export function RightSidebar() {
   ];
 
   return (
-    <div className="absolute right-6 top-[95px] z-10 flex h-[calc(100vh-110px)] w-[380px] flex-col gap-4 pb-4">
+    <motion.div 
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.3
+          }
+        }
+      }}
+      className="absolute right-6 top-[95px] z-10 flex h-[calc(100vh-110px)] w-[380px] flex-col gap-4 pb-4"
+    >
       
       {/* Attached Tabs on Left Edge */}
       <div className="absolute left-[-40px] top-[140px] flex flex-col gap-8 z-[100] font-medium pointer-events-auto">
@@ -261,7 +287,7 @@ export function RightSidebar() {
 
          <div className="flex flex-col gap-3">
             {alerts.map((alert, idx) => (
-                <div key={idx} className="group relative flex gap-3 rounded bg-gradient-to-r from-slate-800/80 to-transparent p-3 transition-colors hover:bg-slate-700/50 border border-transparent hover:border-slate-600/30">
+                <motion.div variants={itemVariants} key={idx} className="group relative flex gap-3 rounded bg-gradient-to-r from-slate-800/80 to-transparent p-3 transition-colors hover:bg-slate-700/50 border border-transparent hover:border-slate-600/30">
                   <div className="absolute top-0 left-0 h-full w-[2px] bg-gradient-to-b from-blue-400/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   
                   <div className={cn("mt-1 flex shrink-0 items-center justify-center rounded-sm h-9 w-9 bg-slate-900 border border-slate-700", alert.tag.includes('人员') ? 'text-red-400' : 'text-orange-400')}>
@@ -286,10 +312,10 @@ export function RightSidebar() {
                        </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
             ))}
          </div>
       </Panel>
-    </div>
+    </motion.div>
   );
 }

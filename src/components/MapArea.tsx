@@ -3,17 +3,22 @@ import { Search, Layers, Crosshair, Ruler, Maximize } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, ZoomControl, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { cn } from '../lib/utils';
+import { motion } from 'motion/react';
 import ReactDOMServer from 'react-dom/server';
 
 const rippleKeyframes = `
   @keyframes mapRipple {
-    0% { transform: translate(-50%, -50%) rotateX(72deg) scale(0.2); opacity: 0.9; border-width: 3px; }
-    50% { opacity: 0.5; border-width: 2px; }
-    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(3.5); opacity: 0; border-width: 0px; }
+    0% { transform: translate(-50%, -50%) rotateX(72deg) scale(0.2); opacity: 0.8; border-width: 2px; border-color: inherit; }
+    50% { opacity: 0.4; border-width: 1px; }
+    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(3); opacity: 0; border-width: 0px; }
+  }
+  @keyframes pinEnter {
+    0% { transform: translate(-50%, -150%); opacity: 0; }
+    100% { transform: translate(-50%, -100%); opacity: 1; }
   }
 `;
 
-function createCustomIcon(name: string, type: string, active: boolean = false) {
+function createCustomIcon(name: string, type: string, active: boolean = false, delay: number = 0) {
   const getMainColor = () => {
     switch (type) {
       case 'person': return 'rgba(59,130,246,1)';
@@ -34,14 +39,14 @@ function createCustomIcon(name: string, type: string, active: boolean = false) {
 
   const iconHtml = `
     <style>${rippleKeyframes}</style>
-    <div class="flex flex-col items-center justify-center -translate-x-1/2 -translate-y-full pointer-events-none">
+    <div class="flex flex-col items-center justify-center pointer-events-none" style="animation: pinEnter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s both;">
       <div class="relative flex flex-col items-center justify-end pb-[8px]">
         
         <!-- Ripple effect branching from map surface (3D perspective) -->
         <div class="absolute bottom-[0px] left-1/2 w-0 h-0 pointer-events-none" style="perspective: 1000px;">
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 60px; height: 60px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 0s; box-shadow: 0 0 15px ${getMainColor()} inset, 0 0 15px ${getMainColor()}"></div>
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 60px; height: 60px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 1.3s; box-shadow: 0 0 15px ${getMainColor()} inset, 0 0 15px ${getMainColor()}"></div>
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 60px; height: 60px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 2.6s; box-shadow: 0 0 15px ${getMainColor()} inset, 0 0 15px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 70px; height: 70px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: ${delay}s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 70px; height: 70px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: ${delay + 1.3}s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 70px; height: 70px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: ${delay + 2.6}s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
         </div>
 
         <!-- Pin Arrow pointing to map -->
@@ -82,7 +87,12 @@ export function MapArea() {
   const center: [number, number] = [26.885, 120.003]; // Xiapu / Shuimen area roughly
   
   return (
-    <div className="absolute inset-0 z-0 bg-[#06141d] overflow-hidden">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+      className="absolute inset-0 z-0 bg-[#06141d] overflow-hidden"
+    >
       <MapContainer 
         center={center} 
         zoom={12} 
@@ -104,23 +114,28 @@ export function MapArea() {
           className="map-tiles-filter"
         />
 
-        <Marker position={[26.920, 119.950]} icon={createCustomIcon('钟家镇', 'person')} />
-        <Marker position={[26.878, 120.021]} icon={createCustomIcon('水门港区', 'unit', true)} />
-        <Marker position={[26.840, 120.005]} icon={createCustomIcon('金沙湾', 'person')} />
-        <Marker position={[26.950, 120.080]} icon={createCustomIcon('X976', 'alert')} />
+        <Marker position={[26.920, 119.950]} icon={createCustomIcon('钟家镇', 'person', false, 1.2)} />
+        <Marker position={[26.878, 120.021]} icon={createCustomIcon('水门港区', 'unit', true, 1.6)} />
+        <Marker position={[26.840, 120.005]} icon={createCustomIcon('金沙湾', 'person', false, 1.4)} />
+        <Marker position={[26.950, 120.080]} icon={createCustomIcon('X976', 'alert', false, 1.8)} />
 
       </MapContainer>
 
       {/* Map Tools Left Bottom */}
-      <div className="absolute bottom-[40px] left-[400px] z-[1000] flex flex-col items-center gap-6 rounded-[20px] bg-gradient-to-b from-blue-900/60 to-blue-950/40 py-6 px-1.5 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4),0_8px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-blue-400/30 w-[42px]">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8, y: 50 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.6, ease: "easeOut" }}
+        className="absolute bottom-[40px] left-[400px] z-[1000] flex flex-col items-center gap-6 rounded-[20px] bg-gradient-to-b from-blue-900/60 to-blue-950/40 py-6 px-1.5 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4),0_8px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-blue-400/30 w-[42px]"
+      >
         <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Search size={22} /></button>
         <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Layers size={22} /></button>
         <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Crosshair size={22} /></button>
         <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Ruler size={22} /></button>
         <div className="h-4" /> {/* Spacer instead of line to match screenshot */}
         <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Maximize size={22} /></button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

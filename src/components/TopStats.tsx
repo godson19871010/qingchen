@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserCheck, Target, Building2, MapPin } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { motion } from 'motion/react';
 
 interface StatCardProps {
   title: string;
@@ -11,7 +12,10 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, delay = 0 }: StatCardProps) {
   return (
-    <div 
+    <motion.div 
+      initial={{ opacity: 0, y: -20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.6, delay: 0.8 + delay * 0.1, ease: "easeOut" }}
       className="relative flex items-center justify-center gap-5 overflow-hidden rounded-2xl border-t border-t-blue-300/40 border-r border-r-blue-400/20 border-b border-b-black/40 border-l border-l-blue-400/20 bg-gradient-to-br from-blue-900/60 via-blue-950/50 to-[rgba(10,20,40,0.6)] py-4 px-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)] backdrop-blur-md"
     >
       {/* Realistic External Light Source Cast */}
@@ -43,7 +47,7 @@ function StatCard({ title, value, icon, delay = 0 }: StatCardProps) {
           {value}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
