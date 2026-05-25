@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-teal-50: #f0f9ff;
+  --color-teal-100: #e0f2fe;
+  --color-teal-200: #bae6fd;
+  --color-teal-300: #7dd3fc;
+  --color-teal-400: #38bdf8;
+  --color-teal-500: #0ea5e9;
+  --color-teal-600: #0284c7;
+  --color-teal-700: #0369a1;
+  --color-teal-800: #075985;
+  --color-teal-900: #0c4a6e;
+}
+
+@layer utilities {
+  .glow-text {
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.8), 0 0 20px rgba(56, 189, 248, 0.4);
+  }
+  .glow-border {
+    box-shadow: inset 0 0 15px rgba(14, 165, 233, 0.2), 0 0 10px rgba(14, 165, 233, 0.3);
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(14, 165, 233, 0.05);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(14, 165, 233, 0.2);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(14, 165, 233, 0.4);
+  }
+  .bg-radial-gradient {
+    background-image: radial-gradient(circle at center, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 70%);
+  }
+  .map-tiles-filter {
+    filter: saturate(1.1) brightness(1.05) contrast(1.05);
+  }
+  .custom-leaflet-icon {
+    overflow: visible;
+  }
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #06141d;
+  color: #f1f5f9;
+}

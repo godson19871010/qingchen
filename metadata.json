@@ -1,0 +1,6 @@
+{
+  "name": "Qingchen Prevention Platform",
+  "description": "Smart Cloud 'Qingchen' Prevention and Control Platform Dashboard",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
