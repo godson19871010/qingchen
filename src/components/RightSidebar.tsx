@@ -12,19 +12,28 @@ interface PanelProps {
 }
 
 const Custom3DBar = (props: any) => {
-  const { fill, x, y, width, height } = props;
+  const { fill, x, y, width, height, index = 0 } = props;
   const depth = 6;
   
   if (!height || height <= 0) return null;
 
   return (
-    <g>
-      {/* Front face */}
-      <path d={`M${x},${y} v${height} h${width} v-${height} Z`} fill={fill} />
-      {/* Right face */}
-      <path d={`M${x + width},${y} l${depth},-${depth} v${height} l-${depth},${depth} Z`} fill={fill} style={{ filter: 'brightness(0.6)' }} />
-      {/* Top face */}
-      <path d={`M${x},${y} l${depth},-${depth} h${width} l-${depth},${depth} Z`} fill={fill} style={{ filter: 'brightness(1.3)' }} />
+    <g className="cursor-pointer transition-all duration-300 hover:opacity-80">
+      {/* Front face - semi-transparent */}
+      <path d={`M${x},${y} v${height} h${width} v-${height} Z`} fill={fill} fillOpacity={0.4} stroke={fill} strokeWidth={1} strokeOpacity={0.8} />
+      {/* Right face - semi-transparent */}
+      <path d={`M${x + width},${y} l${depth},-${depth} v${height} l-${depth},${depth} Z`} fill={fill} fillOpacity={0.3} stroke={fill} strokeWidth={1} strokeOpacity={0.6} style={{ filter: 'brightness(0.7)' }} />
+      {/* Top face - semi-transparent */}
+      <path d={`M${x},${y} l${depth},-${depth} h${width} l-${depth},${depth} Z`} fill={fill} fillOpacity={0.6} stroke={fill} strokeWidth={1} strokeOpacity={0.9} style={{ filter: 'brightness(1.5)' }} />
+      
+      {/* Glassy highlight on the left edge */}
+      <path d={`M${x},${y} v${height} h${width/3} v-${height} Z`} fill="#ffffff" fillOpacity={0.15} />
+      
+      {/* Glowing base line */}
+      <line x1={x-2} y1={y+height} x2={x+width+2} y2={y+height} stroke={fill} strokeWidth={2} strokeOpacity={0.8} />
+
+      {/* Subtle breathing animation */}
+      <animate attributeName="opacity" values="0.85; 1; 0.85" dur={`${2.5 + (index % 3) * 0.5}s`} repeatCount="indefinite" />
     </g>
   );
 };
@@ -189,13 +198,13 @@ export function RightSidebar() {
           </div>
 
           <div className="flex gap-3 mt-1">
-             <div className="flex-1 flex flex-col items-center justify-center rounded border border-red-500/30 bg-gradient-to-b from-red-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(239,68,68,0.05)]">
-                <div className="text-[13px] font-medium text-slate-300">预警总数</div>
-                <div className="text-[28px] font-bold tracking-wider text-red-400 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">5</div>
+             <div className="group flex-1 flex flex-col items-center justify-center rounded border border-red-500/30 bg-gradient-to-b from-red-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(239,68,68,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_5px_20px_rgba(239,68,68,0.15)] hover:border-red-400/50">
+                <div className="text-[13px] font-medium text-slate-300 group-hover:text-slate-200 transition-colors">预警总数</div>
+                <div className="text-[28px] font-bold tracking-wider text-red-400 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)] group-hover:drop-shadow-[0_0_12px_rgba(239,68,68,0.8)] transition-all">5</div>
              </div>
-             <div className="flex-1 flex flex-col items-center justify-center rounded border border-blue-400/30 bg-gradient-to-b from-blue-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(59,130,246,0.05)]">
-                <div className="text-[13px] font-medium text-slate-300">已处置</div>
-                <div className="text-[28px] font-bold tracking-wider text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">1</div>
+             <div className="group flex-1 flex flex-col items-center justify-center rounded border border-blue-400/30 bg-gradient-to-b from-blue-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(59,130,246,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_5px_20px_rgba(59,130,246,0.15)] hover:border-blue-300/50">
+                <div className="text-[13px] font-medium text-slate-300 group-hover:text-slate-200 transition-colors">已处置</div>
+                <div className="text-[28px] font-bold tracking-wider text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] group-hover:drop-shadow-[0_0_12px_rgba(59,130,246,0.8)] transition-all">1</div>
              </div>
           </div>
 
@@ -219,8 +228,8 @@ export function RightSidebar() {
                   cursor={{ fill: '#ef4444', opacity: 0.15 }}
                   contentStyle={{ backgroundColor: '#0f172a', borderColor: '#475569', borderRadius: '6px', fontSize: '13px', boxShadow: '0 0 10px rgba(0,0,0,0.5)' }}
                 />
-                <Bar dataKey="total" fill="#ef4444" barSize={18} shape={<Custom3DBar />} />
-                <Bar dataKey="handled" fill="#3b82f6" barSize={18} shape={<Custom3DBar />} />
+                <Bar dataKey="total" fill="#ef4444" barSize={18} shape={<Custom3DBar />} isAnimationActive={true} animationDuration={1800} animationEasing="ease-out" />
+                <Bar dataKey="handled" fill="#3b82f6" barSize={18} shape={<Custom3DBar />} isAnimationActive={true} animationDuration={1800} animationEasing="ease-out" />
               </BarChart>
             </ResponsiveContainer>
           </div>
