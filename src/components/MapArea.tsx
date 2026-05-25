@@ -7,9 +7,9 @@ import ReactDOMServer from 'react-dom/server';
 
 const rippleKeyframes = `
   @keyframes mapRipple {
-    0% { transform: translate(-50%, -50%) rotateX(72deg) scale(0.2); opacity: 0.8; border-width: 2px; }
-    50% { opacity: 0.4; border-width: 1px; }
-    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(2); opacity: 0; border-width: 0px; }
+    0% { transform: translate(-50%, -50%) rotateX(72deg) scale(0.2); opacity: 0.9; border-width: 3px; }
+    50% { opacity: 0.5; border-width: 2px; }
+    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(3.5); opacity: 0; border-width: 0px; }
   }
 `;
 
@@ -39,9 +39,9 @@ function createCustomIcon(name: string, type: string, active: boolean = false) {
         
         <!-- Ripple effect branching from map surface (3D perspective) -->
         <div class="absolute bottom-[0px] left-1/2 w-0 h-0 pointer-events-none" style="perspective: 1000px;">
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 50px; height: 50px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 0s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 50px; height: 50px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 1.3s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 50px; height: 50px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 2.6s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 60px; height: 60px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 0s; box-shadow: 0 0 15px ${getMainColor()} inset, 0 0 15px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 60px; height: 60px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 1.3s; box-shadow: 0 0 15px ${getMainColor()} inset, 0 0 15px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 60px; height: 60px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 2.6s; box-shadow: 0 0 15px ${getMainColor()} inset, 0 0 15px ${getMainColor()}"></div>
         </div>
 
         <!-- Pin Arrow pointing to map -->

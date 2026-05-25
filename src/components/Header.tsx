@@ -14,20 +14,20 @@ export function Header() {
           <defs>
              <linearGradient id="rimGlow" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="8%" stopColor="transparent" />
-                <stop offset="22%" stopColor="#0ea5e9" stopOpacity="0.6" />
-                <stop offset="35%" stopColor="#38bdf8" stopOpacity="0.9" />
+                <stop offset="22%" stopColor="#1e3a8a" stopOpacity="0.6" />
+                <stop offset="35%" stopColor="#3b82f6" stopOpacity="0.9" />
                 <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-                <stop offset="65%" stopColor="#38bdf8" stopOpacity="0.9" />
-                <stop offset="78%" stopColor="#0ea5e9" stopOpacity="0.6" />
+                <stop offset="65%" stopColor="#3b82f6" stopOpacity="0.9" />
+                <stop offset="78%" stopColor="#1e3a8a" stopOpacity="0.6" />
                 <stop offset="92%" stopColor="transparent" />
              </linearGradient>
              <linearGradient id="fillFade" x1="0" y1="85" x2="0" y2="0" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.4" />
-                <stop offset="40%" stopColor="#0ea5e9" stopOpacity="0.1" />
+                <stop offset="0%" stopColor="#2563eb" stopOpacity="0.3" />
+                <stop offset="40%" stopColor="#1e40af" stopOpacity="0.1" />
                 <stop offset="100%" stopColor="transparent" />
              </linearGradient>
              <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#7dd3fc" stopOpacity="0.6" />
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
                 <stop offset="100%" stopColor="transparent" />
              </radialGradient>
           </defs>
@@ -47,15 +47,15 @@ export function Header() {
       <div className="flex w-[300px] items-center gap-2 opacity-80 pt-2 pointer-events-auto">
         <div className="h-1.5 w-12 -skew-x-[30deg] bg-gradient-to-r from-transparent to-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
         <div className="h-1.5 w-6 -skew-x-[30deg] bg-blue-400"></div>
-        <div className="h-1.5 w-3 -skew-x-[30deg] bg-blue-400/60"></div>
+        <div className="h-1.5 w-3 -skew-x-[30deg] bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
       </div>
       
       {/* Title */}
       <div className="relative flex flex-col items-center justify-center pt-2 pointer-events-auto">
-        <h1 className="relative z-10 flex items-center justify-center gap-6 text-slate-200 drop-shadow-[0_2px_8px_rgba(59,130,246,0.5)] pb-1">
-          <span className="text-[28px] font-bold tracking-[0.25em]">数 智 云</span>
-          <span className="text-[36px] font-bold tracking-[0.2em] px-4 text-transparent bg-clip-text bg-gradient-to-b from-blue-300 via-white to-blue-400 drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]">清 尘</span>
-          <span className="text-[28px] font-bold tracking-[0.25em]">防 控 平 台</span>
+        <h1 className="relative z-10 flex items-center justify-center gap-6 pb-1">
+          <span className="text-[28px] font-bold tracking-[0.25em] text-slate-100 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">数 智 云</span>
+          <span className="text-[38px] font-bold tracking-[0.2em] px-4 text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-slate-400 drop-shadow-[0_2px_12px_rgba(255,255,255,0.4)]">清 尘</span>
+          <span className="text-[28px] font-bold tracking-[0.25em] text-slate-100 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">防 控 平 台</span>
         </h1>
       </div>
       
