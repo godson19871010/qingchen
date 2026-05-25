@@ -12,7 +12,7 @@ interface StatCardProps {
 function StatCard({ title, value, icon, delay = 0 }: StatCardProps) {
   return (
     <div 
-      className="relative flex items-center justify-center gap-5 overflow-hidden rounded-2xl border-t border-t-slate-300/40 border-r border-r-slate-400/20 border-b border-b-black/60 border-l border-l-slate-400/20 bg-gradient-to-br from-slate-800/60 via-slate-900/60 to-[rgba(5,10,15,0.7)] py-4 px-4 shadow-[0_4px_30px_rgba(0,0,0,0.4)] backdrop-blur-md"
+      className="relative flex items-center justify-center gap-5 overflow-hidden rounded-2xl border-t border-t-blue-300/40 border-r border-r-blue-400/20 border-b border-b-black/40 border-l border-l-blue-400/20 bg-gradient-to-br from-blue-900/60 via-blue-950/50 to-[rgba(10,20,40,0.6)] py-4 px-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)] backdrop-blur-md"
     >
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
@@ -34,12 +34,12 @@ function StatCard({ title, value, icon, delay = 0 }: StatCardProps) {
       {/* Inner Bevel for Metallic Depth */}
       <div className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.2),inset_0_0_20px_rgba(255,255,255,0.02),inset_-1px_-1px_3px_rgba(0,0,0,0.5)]" />
 
-      <div className="relative z-20 flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-900/40 to-cyan-950/40 text-cyan-300 shadow-[inset_0_0_15px_rgba(6,182,212,0.2)]">
+      <div className="relative z-20 flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-xl border border-blue-400/30 bg-gradient-to-br from-blue-600/20 to-blue-900/40 text-blue-300 shadow-[inset_0_0_15px_rgba(59,130,246,0.2)]">
         {icon}
       </div>
       <div className="flex flex-col z-20 w-24">
-        <div className="text-[13px] font-medium text-slate-400 mb-0.5">{title}</div>
-        <div className="text-[32px] font-bold leading-none bg-gradient-to-r from-cyan-300 to-emerald-400 bg-clip-text text-transparent font-mono drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">
+        <div className="text-[13px] font-medium text-blue-200/80 mb-0.5">{title}</div>
+        <div className="text-[32px] font-bold leading-none bg-gradient-to-r from-blue-300 to-sky-200 bg-clip-text text-transparent font-mono drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]">
           {value}
         </div>
       </div>

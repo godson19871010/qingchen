@@ -31,7 +31,7 @@ const Custom3DBar = (props: any) => {
 
 function Panel({ title, icon, children, className, actions }: PanelProps) {
   return (
-    <div className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-slate-300/40 border-r border-r-slate-400/20 border-b border-b-black/60 border-l border-l-slate-400/20 bg-gradient-to-br from-slate-800/60 via-slate-900/60 to-[rgba(5,10,15,0.7)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.4)]", className)}>
+    <div className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}>
       
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
@@ -56,7 +56,7 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-5 pt-4 pb-2">
         <div className="relative flex items-center gap-3">
-           <div className="relative flex items-center justify-center text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">
+           <div className="relative flex items-center justify-center text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">
              <div className="z-10">{icon}</div>
            </div>
            <span className="font-sans text-sm font-semibold tracking-wider text-slate-200 uppercase">{title}</span>
@@ -162,7 +162,7 @@ export function RightSidebar() {
             <div className="flex items-center gap-2">
               <span>类型:</span>
               <div className="flex gap-1 rounded bg-slate-800/80 border border-slate-600/30 p-0.5">
-                <button className="rounded bg-violet-500/20 px-3 py-0.5 text-violet-300 shadow-[0_0_8px_rgba(139,92,246,0.3)]">人</button>
+                <button className="rounded bg-blue-500/30 px-3 py-0.5 text-blue-300 shadow-[0_0_8px_rgba(59,130,246,0.3)]">人</button>
                 <button className="px-3 py-0.5 hover:text-slate-200 hover:bg-slate-700/50 rounded transition-colors">车</button>
               </div>
             </div>
@@ -183,19 +183,19 @@ export function RightSidebar() {
               <span>结束日期</span>
               <ChevronDown size={14} className="text-slate-400" />
             </div>
-            <button className="rounded border border-slate-600/40 bg-slate-800/80 p-1 text-cyan-400 hover:bg-slate-700 transition-colors shadow-[0_0_8px_rgba(6,182,212,0.2)]">
+            <button className="rounded border border-slate-600/40 bg-slate-800/80 p-1 text-blue-400 hover:bg-slate-700 transition-colors shadow-[0_0_8px_rgba(59,130,246,0.2)]">
               <RefreshCcw size={16} />
             </button>
           </div>
 
           <div className="flex gap-3 mt-1">
-             <div className="flex-1 flex flex-col items-center justify-center rounded border border-violet-500/30 bg-gradient-to-b from-violet-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(139,92,246,0.05)]">
+             <div className="flex-1 flex flex-col items-center justify-center rounded border border-red-500/30 bg-gradient-to-b from-red-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(239,68,68,0.05)]">
                 <div className="text-[13px] font-medium text-slate-300">预警总数</div>
-                <div className="text-[28px] font-bold tracking-wider text-violet-400 drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]">5</div>
+                <div className="text-[28px] font-bold tracking-wider text-red-400 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">5</div>
              </div>
-             <div className="flex-1 flex flex-col items-center justify-center rounded border border-cyan-400/30 bg-gradient-to-b from-cyan-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(6,182,212,0.05)]">
+             <div className="flex-1 flex flex-col items-center justify-center rounded border border-blue-400/30 bg-gradient-to-b from-blue-500/10 to-transparent py-3 shadow-[0_0_15px_rgba(59,130,246,0.05)]">
                 <div className="text-[13px] font-medium text-slate-300">已处置</div>
-                <div className="text-[28px] font-bold tracking-wider text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">1</div>
+                <div className="text-[28px] font-bold tracking-wider text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">1</div>
              </div>
           </div>
 
@@ -216,22 +216,22 @@ export function RightSidebar() {
                   tickCount={5}
                 />
                 <Tooltip 
-                  cursor={{ fill: '#8b5cf6', opacity: 0.15 }}
+                  cursor={{ fill: '#ef4444', opacity: 0.15 }}
                   contentStyle={{ backgroundColor: '#0f172a', borderColor: '#475569', borderRadius: '6px', fontSize: '13px', boxShadow: '0 0 10px rgba(0,0,0,0.5)' }}
                 />
-                <Bar dataKey="total" fill="#8b5cf6" barSize={18} shape={<Custom3DBar />} />
-                <Bar dataKey="handled" fill="#06b6d4" barSize={18} shape={<Custom3DBar />} />
+                <Bar dataKey="total" fill="#ef4444" barSize={18} shape={<Custom3DBar />} />
+                <Bar dataKey="handled" fill="#3b82f6" barSize={18} shape={<Custom3DBar />} />
               </BarChart>
             </ResponsiveContainer>
           </div>
           
           <div className="flex justify-center gap-8 text-xs font-medium text-slate-300">
             <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-sm bg-violet-400 shadow-[0_0_6px_rgba(139,92,246,0.5)]"></div>
+              <div className="h-3 w-3 rounded-sm bg-red-400 shadow-[0_0_6px_rgba(239,68,68,0.5)]"></div>
               <span>预警数量</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-sm bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.5)]"></div>
+              <div className="h-3 w-3 rounded-sm bg-blue-400 shadow-[0_0_6px_rgba(59,130,246,0.5)]"></div>
               <span>已处置数量</span>
             </div>
           </div>
@@ -241,19 +241,19 @@ export function RightSidebar() {
       {/* 预警监测 (Alert Monitoring) */}
       <Panel title="预警监测" icon={<Bell size={14} strokeWidth={2.5}/>} className="flex-1">
          <div className="mb-4 flex gap-1 rounded bg-slate-800/80 border border-slate-600/30 p-0.5 text-[13px] text-slate-400">
-            <button className="rounded bg-cyan-500/20 px-4 py-1 text-cyan-300 shadow-[0_0_8px_rgba(6,182,212,0.2)]">预警类</button>
+            <button className="rounded bg-blue-500/20 px-4 py-1 text-blue-300 shadow-[0_0_8px_rgba(59,130,246,0.2)]">预警类</button>
             <button className="rounded px-4 py-1 hover:text-slate-200 hover:bg-slate-700/50 transition-colors">提醒类</button>
             <div className="mx-1 my-1 w-px bg-slate-600/50"></div>
             <button className="px-3 py-1 hover:text-slate-200 hover:bg-slate-700/30 transition-colors rounded">人</button>
             <button className="px-3 py-1 hover:text-slate-200 hover:bg-slate-700/30 transition-colors rounded">车</button>
             <button className="px-3 py-1 hover:text-slate-200 hover:bg-slate-700/30 transition-colors rounded">更多<ChevronDown size={12} className="inline ml-0.5 mb-0.5" /></button>
-            <button className="ml-auto px-3 py-1 hover:text-cyan-300 border-l border-slate-600/50 transition-colors">自定义</button>
+            <button className="ml-auto px-3 py-1 hover:text-blue-300 border-l border-slate-600/50 transition-colors">自定义</button>
          </div>
 
          <div className="flex flex-col gap-3">
             {alerts.map((alert, idx) => (
                 <div key={idx} className="group relative flex gap-3 rounded bg-gradient-to-r from-slate-800/80 to-transparent p-3 transition-colors hover:bg-slate-700/50 border border-transparent hover:border-slate-600/30">
-                  <div className="absolute top-0 left-0 h-full w-[2px] bg-gradient-to-b from-cyan-400/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute top-0 left-0 h-full w-[2px] bg-gradient-to-b from-blue-400/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   
                   <div className={cn("mt-1 flex shrink-0 items-center justify-center rounded-sm h-9 w-9 bg-slate-900 border border-slate-700", alert.tag.includes('人员') ? 'text-red-400' : 'text-orange-400')}>
                      <Bell size={18} />
@@ -271,9 +271,9 @@ export function RightSidebar() {
                     <div className="mt-2 flex items-center justify-between text-xs">
                        <span className="text-slate-500 font-mono">{alert.time}</span>
                        <div className="flex gap-1.5">
-                         <button className="rounded border border-slate-600 bg-slate-800 px-2 py-0.5 text-cyan-400 hover:bg-slate-700 transition-colors">签收</button>
+                         <button className="rounded border border-slate-600 bg-slate-800 px-2 py-0.5 text-blue-400 hover:bg-slate-700 transition-colors">签收</button>
                          <button className="rounded border border-slate-600 bg-slate-800 px-2 py-0.5 text-slate-300 hover:bg-slate-700 transition-colors">忽略</button>
-                         <button className="rounded border border-slate-600 bg-slate-800 px-2 py-0.5 text-violet-400 hover:bg-slate-700 transition-colors">下发指令</button>
+                         <button className="rounded border border-slate-600 bg-slate-800 px-2 py-0.5 text-red-400 hover:bg-slate-700 transition-colors">下发指令</button>
                        </div>
                     </div>
                   </div>

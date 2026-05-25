@@ -12,7 +12,7 @@ interface PanelProps {
 
 function Panel({ title, icon, children, className, actions }: PanelProps) {
   return (
-    <div className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-slate-300/40 border-r border-r-slate-400/20 border-b border-b-black/60 border-l border-l-slate-400/20 bg-gradient-to-br from-slate-800/60 via-slate-900/60 to-[rgba(5,10,15,0.7)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.4)]", className)}>
+    <div className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}>
       
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
@@ -37,7 +37,7 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-5 pt-4 pb-2">
         <div className="relative flex items-center gap-3">
-           <div className="relative flex items-center justify-center text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">
+           <div className="relative flex items-center justify-center text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">
              <div className="z-10">{icon}</div>
            </div>
            <span className="font-sans text-sm font-semibold tracking-wider text-slate-200 uppercase">{title}</span>
@@ -78,8 +78,8 @@ export function LeftSidebar() {
       <Panel title="勤务状态" icon={<Shield size={14} strokeWidth={2.5}/>}>
         <div className="mb-4 flex items-center justify-between pr-2 text-sm text-slate-400">
           <span>日期:</span>
-          <div className="flex items-center gap-2 rounded border border-slate-600/40 bg-slate-800/80 px-2 py-1 text-slate-300 shadow-[inset_0_0_8px_rgba(0,0,0,0.2)]">
-            <Calendar size={14} className="text-cyan-400" />
+          <div className="flex items-center gap-2 rounded border border-blue-500/30 bg-slate-800/80 px-2 py-1 text-slate-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.2)]">
+            <Calendar size={14} className="text-blue-400" />
             <span>2026-05-14</span>
           </div>
         </div>
@@ -103,8 +103,8 @@ export function LeftSidebar() {
         icon={<ClipboardList size={14} strokeWidth={2.5} />}
         actions={
           <>
-            <button className="rounded border border-cyan-400/40 bg-cyan-500/10 px-2 py-0.5 text-xs text-cyan-300 hover:bg-cyan-500/20 transition-colors">下发指令</button>
-            <button className="rounded border border-cyan-400/40 bg-cyan-500/10 px-2 py-0.5 text-xs text-cyan-300 hover:bg-cyan-500/20 transition-colors">任务调度</button>
+            <button className="rounded border border-blue-400/40 bg-blue-500/10 px-2 py-0.5 text-xs text-blue-300 hover:bg-blue-500/20 transition-colors">下发指令</button>
+            <button className="rounded border border-blue-400/40 bg-blue-500/10 px-2 py-0.5 text-xs text-blue-300 hover:bg-blue-500/20 transition-colors">任务调度</button>
           </>
         }
       >
@@ -124,9 +124,9 @@ export function LeftSidebar() {
             {tasks.map((task, idx) => (
               <tr key={idx} className="border-b border-slate-600/20 last:border-0 hover:bg-white/5 transition-colors">
                 <td className="py-3 text-left text-slate-400/80">{task.level}</td>
-                <td className="py-3 text-cyan-100">{task.total}</td>
-                <td className="py-3 text-cyan-400">{task.done}</td>
-                <td className="py-3 text-orange-400">{task.undone}</td>
+                <td className="py-3 text-blue-100">{task.total}</td>
+                <td className="py-3 text-blue-400">{task.done}</td>
+                <td className="py-3 text-red-400">{task.undone}</td>
                 <td className="py-3">{task.h24}</td>
                 <td className="py-3">{task.h72}</td>
                 <td className="py-3 pr-1 text-right">{task.overdue}</td>
@@ -142,7 +142,7 @@ export function LeftSidebar() {
         icon={<MapPin size={14} strokeWidth={2.5}/>}
         actions={
           <div className="flex gap-1 rounded bg-slate-800/80 border border-slate-600/30 p-0.5">
-             <button className="rounded bg-cyan-500/20 px-2 py-0.5 text-[11px] text-slate-200 shadow-[0_0_8px_rgba(6,182,212,0.2)]">巡逻打卡</button>
+             <button className="rounded bg-blue-600/30 px-2 py-0.5 text-[11px] text-blue-100 shadow-[0_0_8px_rgba(59,130,246,0.3)]">巡逻打卡</button>
              <button className="rounded px-2 py-0.5 text-[11px] text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-colors">事件线索</button>
              <button className="rounded px-2 py-0.5 text-[11px] text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors">一键报警</button>
           </div>
@@ -153,9 +153,9 @@ export function LeftSidebar() {
             { name: '水门渔港巡逻队', desc: '水门渔港东海岸线', time: '2026-05-14 08:00:00' },
             { name: '金沙湾巡逻队', desc: '金沙湾景区及周边道路', time: '2026-05-14 09:30:00' },
           ].map((patrol, idx) => (
-            <div key={idx} className="group flex items-center justify-between rounded border border-slate-600/30 bg-gradient-to-r from-slate-800/50 to-transparent p-3 hover:border-slate-500/50 transition-colors">
+            <div key={idx} className="group flex items-center justify-between rounded border border-blue-500/20 bg-gradient-to-r from-blue-900/30 to-transparent p-3 hover:border-blue-400/40 transition-colors">
               <div className="flex gap-3">
-                <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 border border-slate-600 text-cyan-400 group-hover:shadow-[0_0_8px_rgba(6,182,212,0.3)] group-hover:border-cyan-500/50 transition-all">
+                <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 border border-slate-600 text-blue-400 group-hover:shadow-[0_0_8px_rgba(59,130,246,0.3)] group-hover:border-blue-500/50 transition-all">
                   <Shield size={16} />
                 </div>
                 <div>
@@ -164,7 +164,7 @@ export function LeftSidebar() {
                   <div className="mt-0.5 text-[11px] text-slate-500 font-mono">{patrol.time}</div>
                 </div>
               </div>
-              <div className="text-[13px] font-semibold text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.5)]">进行中</div>
+              <div className="text-[13px] font-semibold text-blue-400 drop-shadow-[0_0_5px_rgba(59,130,246,0.5)]">进行中</div>
             </div>
           ))}
         </div>

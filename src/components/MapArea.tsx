@@ -9,26 +9,26 @@ const rippleKeyframes = `
   @keyframes mapRipple {
     0% { transform: translate(-50%, -50%) rotateX(72deg) scale(0.2); opacity: 0.8; border-width: 2px; }
     50% { opacity: 0.4; border-width: 1px; }
-    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(4); opacity: 0; border-width: 0px; }
+    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(2); opacity: 0; border-width: 0px; }
   }
 `;
 
 function createCustomIcon(name: string, type: string, active: boolean = false) {
   const getMainColor = () => {
     switch (type) {
-      case 'person': return 'rgba(45,212,191,1)';
-      case 'unit': return 'rgba(96,165,250,1)';
-      case 'alert': return 'rgba(248,113,113,1)';
-      default: return 'rgba(45,212,191,1)';
+      case 'person': return 'rgba(59,130,246,1)';
+      case 'unit': return 'rgba(56,189,248,1)';
+      case 'alert': return 'rgba(239,68,68,1)';
+      default: return 'rgba(59,130,246,1)';
     }
   };
   
   const getBgColor = () => {
     switch (type) {
-      case 'person': return 'rgba(20,184,166,0.3)';
-      case 'unit': return 'rgba(59,130,246,0.3)';
-      case 'alert': return 'rgba(239,68,68,0.3)';
-      default: return 'rgba(20,184,166,0.3)';
+      case 'person': return 'rgba(37,99,235,0.3)';
+      case 'unit': return 'rgba(2,132,199,0.3)';
+      case 'alert': return 'rgba(220,38,38,0.3)';
+      default: return 'rgba(37,99,235,0.3)';
     }
   };
 
@@ -39,9 +39,9 @@ function createCustomIcon(name: string, type: string, active: boolean = false) {
         
         <!-- Ripple effect branching from map surface (3D perspective) -->
         <div class="absolute bottom-[0px] left-1/2 w-0 h-0 pointer-events-none" style="perspective: 1000px;">
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 0s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 2s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 4s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 50px; height: 50px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 0s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 50px; height: 50px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 1.3s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 50px; height: 50px; border-color: ${getMainColor()}; animation: mapRipple 4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 2.6s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
         </div>
 
         <!-- Pin Arrow pointing to map -->
@@ -112,13 +112,13 @@ export function MapArea() {
       </MapContainer>
 
       {/* Map Tools Left Bottom */}
-      <div className="absolute bottom-[40px] left-[400px] z-[1000] flex flex-col items-center gap-6 rounded-[20px] bg-gradient-to-b from-[#b3c7cf]/40 to-[#738f9f]/20 py-6 px-1.5 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4),0_8px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-white/20 w-[42px]">
-        <button className="text-white hover:text-cyan-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Search size={22} /></button>
-        <button className="text-white hover:text-cyan-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Layers size={22} /></button>
-        <button className="text-white hover:text-cyan-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Crosshair size={22} /></button>
-        <button className="text-white hover:text-cyan-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Ruler size={22} /></button>
+      <div className="absolute bottom-[40px] left-[400px] z-[1000] flex flex-col items-center gap-6 rounded-[20px] bg-gradient-to-b from-blue-900/60 to-blue-950/40 py-6 px-1.5 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4),0_8px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl border border-blue-400/30 w-[42px]">
+        <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Search size={22} /></button>
+        <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Layers size={22} /></button>
+        <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Crosshair size={22} /></button>
+        <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Ruler size={22} /></button>
         <div className="h-4" /> {/* Spacer instead of line to match screenshot */}
-        <button className="text-white hover:text-cyan-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Maximize size={22} /></button>
+        <button className="text-blue-100 hover:text-blue-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"><Maximize size={22} /></button>
       </div>
     </div>
   );
