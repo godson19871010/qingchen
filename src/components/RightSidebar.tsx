@@ -11,42 +11,38 @@ interface PanelProps {
   actions?: React.ReactNode;
 }
 
+const Custom3DBar = (props: any) => {
+  const { fill, x, y, width, height } = props;
+  const depth = 6;
+  
+  if (!height || height <= 0) return null;
+
+  return (
+    <g>
+      {/* Front face */}
+      <path d={`M${x},${y} v${height} h${width} v-${height} Z`} fill={fill} />
+      {/* Right face */}
+      <path d={`M${x + width},${y} l${depth},-${depth} v${height} l-${depth},${depth} Z`} fill={fill} style={{ filter: 'brightness(0.6)' }} />
+      {/* Top face */}
+      <path d={`M${x},${y} l${depth},-${depth} h${width} l-${depth},${depth} Z`} fill={fill} style={{ filter: 'brightness(1.3)' }} />
+    </g>
+  );
+};
+
 function Panel({ title, icon, children, className, actions }: PanelProps) {
   return (
     <div className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-cyan-100/50 border-r border-r-cyan-200/20 border-b border-b-black/40 border-l border-l-cyan-300/10 bg-gradient-to-br from-[#0e273a]/40 via-[#081825]/40 to-[#040e14]/40 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.3)]", className)}>
       
-      {/* Pure White Radial Glow from Top-Left */}
-      <div className="pointer-events-none absolute top-0 left-0 w-full h-full z-10" 
-           style={{ background: 'radial-gradient(circle at 0% 0%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 40%, transparent 80%)' }} />
+      {/* Extremely subtle ambient top-left glow */}
+      <div className="pointer-events-none absolute top-[-20%] left-[-20%] w-[50%] h-[50%] z-10 mix-blend-overlay"
+           style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)' }} />
+           
+      {/* Edge reflections */}
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-white/20 via-white/5 to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 left-0 bottom-0 w-[1px] bg-gradient-to-b from-white/20 via-white/5 to-transparent z-10" />
       
-      {/* Short Diagonal Light Beams shooting to the middle */}
-      <div className="pointer-events-none absolute top-0 left-0 w-[120px] h-[1.5px] z-20 origin-top-left rotate-[30deg] bg-gradient-to-r from-white via-white/80 to-transparent shadow-[0_0_10px_2px_rgba(255,255,255,0.8)]" />
-      <div className="pointer-events-none absolute top-0 left-0 w-[80px] h-[2px] z-20 origin-top-left rotate-[45deg] bg-gradient-to-r from-white via-white/90 to-transparent shadow-[0_0_12px_2px_rgba(255,255,255,1)]" />
-      <div className="pointer-events-none absolute top-0 left-0 w-[100px] h-[1px] z-20 origin-top-left rotate-[60deg] bg-gradient-to-r from-white via-white/60 to-transparent shadow-[0_0_8px_1px_rgba(255,255,255,0.6)]" />
-
-      {/* Intense White Core */}
-      <div className="pointer-events-none absolute top-[0px] left-[0px] z-30">
-         <div className="absolute top-[-4px] left-[-4px] h-[8px] w-[8px] rounded-full bg-white shadow-[0_0_30px_15px_rgba(255,255,255,1)]" />
-         <div className="absolute top-[-12px] left-[-12px] h-[24px] w-[24px] rounded-full bg-white/90 blur-[5px]" />
-         <div className="absolute top-[-2px] left-[-40px] w-[80px] h-[4px] bg-white blur-[2px] shadow-[0_0_15px_rgba(255,255,255,1)]" />
-         <div className="absolute top-[-40px] left-[-2px] h-[80px] w-[4px] bg-white blur-[2px] shadow-[0_0_15px_rgba(255,255,255,1)]" />
-      </div>
-      
-      {/* Pure White Radial Glow from Top-Right (Half Brightness) */}
-      <div className="pointer-events-none absolute top-0 right-0 w-full h-full z-10" 
-           style={{ background: 'radial-gradient(circle at 100% 0%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 50%, transparent 80%)' }} />
-      <div className="pointer-events-none absolute top-[0px] right-[0px] z-30">
-         <div className="absolute top-[-2px] right-[-2px] h-[4px] w-[4px] rounded-full bg-white shadow-[0_0_12px_5px_rgba(255,255,255,1)]" />
-         <div className="absolute top-[-8px] right-[-8px] h-[16px] w-[16px] rounded-full bg-white/40 blur-[4px]" />
-      </div>
-      
-      {/* Extremely Sharp, bright top and side edge reflections shooting to middle */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-white via-white/80 to-transparent z-10 shadow-[0_0_10px_2px_rgba(255,255,255,0.8)]" />
-      <div className="pointer-events-none absolute top-0 left-0 bottom-[10%] w-[2px] bg-gradient-to-b from-white via-white/80 to-transparent z-10 shadow-[0_0_10px_2px_rgba(255,255,255,0.8)]" />
-      <div className="pointer-events-none absolute top-0 right-0 bottom-[30%] w-[1.5px] bg-gradient-to-b from-white/40 via-white/20 to-transparent z-10" />
-
-      {/* Inner Bevel Highlights for Frosted Feel */}
-      <div className="pointer-events-none absolute inset-0 rounded-[16px] shadow-[inset_1px_1px_4px_rgba(255,255,255,0.8),inset_-1px_-1px_3px_rgba(0,0,0,0.5)] z-10" />
+      {/* Slight inner rim */}
+      <div className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.1)]" />
 
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-5 pt-4 pb-2">
@@ -197,7 +193,7 @@ export function RightSidebar() {
 
           <div className="mt-2 h-44 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 0, left: -25, bottom: 0 }}>
+              <BarChart data={chartData} margin={{ top: 20, right: 10, left: -25, bottom: 0 }}>
                 <XAxis 
                   dataKey="name" 
                   tick={{ fill: '#99f6e4', fontSize: 11, opacity: 0.8 }} 
@@ -215,8 +211,8 @@ export function RightSidebar() {
                   cursor={{ fill: '#14b8a6', opacity: 0.15 }}
                   contentStyle={{ backgroundColor: '#06141d', borderColor: '#14b8a6', borderRadius: '6px', fontSize: '13px', boxShadow: '0 0 10px rgba(20,184,166,0.2)' }}
                 />
-                <Bar dataKey="total" fill="#eab308" radius={[2, 2, 0, 0]} barSize={24} />
-                <Bar dataKey="handled" fill="#2dd4bf" radius={[2, 2, 0, 0]} barSize={24} />
+                <Bar dataKey="total" fill="#eab308" barSize={18} shape={<Custom3DBar />} />
+                <Bar dataKey="handled" fill="#2dd4bf" barSize={18} shape={<Custom3DBar />} />
               </BarChart>
             </ResponsiveContainer>
           </div>
