@@ -18,6 +18,34 @@ function StatCard({ title, value, icon, delay = 0 }: StatCardProps) {
       transition={{ duration: 0.6, delay: 0.8 + delay * 0.1, ease: "easeOut" }}
       className="relative flex items-center justify-center gap-5 overflow-hidden rounded-2xl border-t border-t-blue-300/40 border-r border-r-blue-400/20 border-b border-b-black/40 border-l border-l-blue-400/20 bg-gradient-to-br from-blue-900/60 via-blue-950/50 to-[rgba(10,20,40,0.6)] py-4 px-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)] backdrop-blur-md"
     >
+      <style>{`
+        @keyframes containerLiquidWave {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes floatUpTop {
+          0% { transform: translateY(0); opacity: 0; }
+          50% { opacity: 0.6; }
+          100% { transform: translateY(-50px); opacity: 0; }
+        }
+      `}</style>
+      
+      {/* Liquid background fill */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+         <div className="absolute bottom-0 left-0 w-full h-[60%] opacity-20 mix-blend-screen overflow-hidden rounded-b-2xl">
+             <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-500/40 to-transparent"></div>
+             <svg className="absolute w-[200%] h-[20px] -top-[5px] left-0 drop-shadow-[0_-2px_6px_rgba(59,130,246,0.5)]" style={{ animation: 'containerLiquidWave 8s linear infinite' }} viewBox="0 0 800 20" preserveAspectRatio="none">
+                <path d="M0,10 C100,0 300,20 400,10 C500,0 700,20 800,10 L800,20 L0,20 Z" fill="rgba(59,130,246,0.3)"/>
+             </svg>
+             <svg className="absolute w-[200%] h-[20px] -top-[2px] left-0" style={{ animation: 'containerLiquidWave 12s linear infinite reverse' }} viewBox="0 0 800 20" preserveAspectRatio="none">
+                <path d="M0,10 C100,20 300,0 400,10 C500,20 700,0 800,10 L800,20 L0,20 Z" fill="rgba(59,130,246,0.5)"/>
+             </svg>
+             {/* Bubbles */}
+             <div className="absolute bottom-1 left-[20%] w-1 h-1 bg-white rounded-full" style={{ animation: 'floatUpTop 3s infinite ease-in' }} />
+             <div className="absolute bottom-2 left-[60%] w-0.5 h-0.5 bg-white rounded-full" style={{ animation: 'floatUpTop 2.5s infinite ease-in 1s' }} />
+         </div>
+      </div>
+
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
            style={{ background: 'radial-gradient(circle at -5% -5%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.04) 30%, transparent 60%)' }} />

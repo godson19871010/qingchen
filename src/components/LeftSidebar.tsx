@@ -20,7 +20,37 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       }}
       className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}
     >
+      <style>{`
+        @keyframes containerLiquidWave {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes floatUp {
+          0% { transform: translateY(0); opacity: 0; }
+          50% { opacity: 0.6; }
+          100% { transform: translateY(-120px); opacity: 0; }
+        }
+      `}</style>
       
+      {/* Liquid background fill */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+         <div className="absolute bottom-0 left-0 w-full h-[35%] opacity-20 mix-blend-screen overflow-hidden rounded-b-[16px]">
+             <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-500/40 to-transparent"></div>
+             <svg className="absolute w-[200%] h-[40px] -top-[10px] left-0 drop-shadow-[0_-2px_10px_rgba(59,130,246,0.5)]" style={{ animation: 'containerLiquidWave 8s linear infinite' }} viewBox="0 0 800 40" preserveAspectRatio="none">
+                <path d="M0,20 C100,0 300,40 400,20 C500,0 700,40 800,20 L800,40 L0,40 Z" fill="rgba(59,130,246,0.4)"/>
+             </svg>
+             <svg className="absolute w-[200%] h-[40px] -top-[5px] left-0" style={{ animation: 'containerLiquidWave 12s linear infinite reverse' }} viewBox="0 0 800 40" preserveAspectRatio="none">
+                <path d="M0,20 C100,40 300,0 400,20 C500,40 700,0 800,20 L800,40 L0,40 Z" fill="rgba(59,130,246,0.6)"/>
+             </svg>
+             {/* Bubbles */}
+             <div className="absolute bottom-2 left-[20%] w-1 h-1 bg-white rounded-full" style={{ animation: 'floatUp 3s infinite ease-in' }} />
+             <div className="absolute bottom-6 left-[60%] w-0.5 h-0.5 bg-white rounded-full" style={{ animation: 'floatUp 2.5s infinite ease-in 1s' }} />
+             <div className="absolute bottom-0 left-[80%] w-1 h-1 bg-white rounded-full" style={{ animation: 'floatUp 4s infinite ease-in 0.5s' }} />
+         </div>
+         {/* Glass Reflex on sides */}
+         <div className="absolute inset-x-0 bottom-0 h-full border-b-[8px] border-l-[3px] border-r-[3px] border-white/5 rounded-[16px] pointer-events-none" />
+      </div>
+
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
            style={{ background: 'radial-gradient(circle at -5% -5%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.04) 30%, transparent 60%)' }} />
@@ -44,10 +74,10 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-5 pt-4 pb-2">
         <div className="relative flex items-center gap-3">
-           <div className="relative flex items-center justify-center text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">
+           <div className="relative flex items-center justify-center text-blue-300 rounded border border-blue-400/50 bg-blue-500/20 p-1.5 shadow-[0_0_12px_rgba(59,130,246,0.8)]">
              <div className="z-10">{icon}</div>
            </div>
-           <span className="font-sans text-sm font-semibold tracking-wider text-slate-200 uppercase">{title}</span>
+           <span className="font-sans text-[15px] font-bold tracking-wider text-slate-100 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{title}</span>
         </div>
         {actions && <div className="relative z-10 flex gap-2 items-center">{actions}</div>}
       </div>
@@ -101,7 +131,7 @@ export function LeftSidebar() {
     >
       
       {/* 勤务状态 (Duty Status) */}
-      <Panel title="勤务状态" icon={<Shield size={14} strokeWidth={2.5}/>}>
+      <Panel title="勤务状态" icon={<Shield size={18} strokeWidth={2.5}/>}>
         <div className="mb-4 flex items-center justify-between pr-2 text-sm text-slate-400">
           <span>日期:</span>
           <div className="flex items-center gap-2 rounded border border-blue-500/30 bg-slate-800/80 px-2 py-1 text-slate-200 shadow-[inset_0_0_8px_rgba(0,0,0,0.2)]">
@@ -126,7 +156,7 @@ export function LeftSidebar() {
       {/* 任务中心 (Task Center) */}
       <Panel 
         title="任务中心" 
-        icon={<ClipboardList size={14} strokeWidth={2.5} />}
+        icon={<ClipboardList size={18} strokeWidth={2.5} />}
         actions={
           <>
             <button className="rounded border border-blue-400/40 bg-blue-500/10 px-2 py-0.5 text-xs text-blue-300 hover:bg-blue-500/20 transition-colors">下发指令</button>
@@ -165,7 +195,7 @@ export function LeftSidebar() {
       {/* 巡逻打卡 (Patrol Check-in) */}
       <Panel 
         title="巡逻打卡" 
-        icon={<MapPin size={14} strokeWidth={2.5}/>}
+        icon={<MapPin size={18} strokeWidth={2.5}/>}
         actions={
           <div className="flex gap-1 rounded bg-slate-800/80 border border-slate-600/30 p-0.5">
              <button className="rounded bg-blue-600/30 px-2 py-0.5 text-[11px] text-blue-100 shadow-[0_0_8px_rgba(59,130,246,0.3)]">巡逻打卡</button>

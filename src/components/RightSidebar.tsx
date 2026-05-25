@@ -14,26 +14,88 @@ interface PanelProps {
 
 const Custom3DBar = (props: any) => {
   const { fill, x, y, width, height, index = 0 } = props;
-  const depth = 6;
+  const depth = 8;
   
   if (!height || height <= 0) return null;
 
-  return (
-    <g className="cursor-pointer transition-all duration-300 hover:opacity-80">
-      {/* Front face - semi-transparent */}
-      <path d={`M${x},${y} v${height} h${width} v-${height} Z`} fill={fill} fillOpacity={0.4} stroke={fill} strokeWidth={1} strokeOpacity={0.8} />
-      {/* Right face - semi-transparent */}
-      <path d={`M${x + width},${y} l${depth},-${depth} v${height} l-${depth},${depth} Z`} fill={fill} fillOpacity={0.3} stroke={fill} strokeWidth={1} strokeOpacity={0.6} style={{ filter: 'brightness(0.7)' }} />
-      {/* Top face - semi-transparent */}
-      <path d={`M${x},${y} l${depth},-${depth} h${width} l-${depth},${depth} Z`} fill={fill} fillOpacity={0.6} stroke={fill} strokeWidth={1} strokeOpacity={0.9} style={{ filter: 'brightness(1.5)' }} />
-      
-      {/* Glassy highlight on the left edge */}
-      <path d={`M${x},${y} v${height} h${width/3} v-${height} Z`} fill="#ffffff" fillOpacity={0.15} />
-      
-      {/* Glowing base line */}
-      <line x1={x-2} y1={y+height} x2={x+width+2} y2={y+height} stroke={fill} strokeWidth={2} strokeOpacity={0.8} />
+  const gradientId = `barGradient-${index}-${fill.replace('#','')}`;
+  
+  // Dimensions for inner liquid volume
+  const padX = 2;
+  const padY = 3;
+  const lx = x + padX;
+  const ly = y + padY;
+  const lw = Math.max(1, width - padX * 2);
+  const lh = Math.max(1, height - padY);
+  const ld = depth - 2;
 
-      {/* Subtle breathing animation */}
+  return (
+    <g className="cursor-pointer transition-all duration-300 hover:opacity-100">
+      <defs>
+        {/* Liquid Gradients: Deep at bottom, light at top */}
+        <linearGradient id={`${gradientId}-liquidFront`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={fill} stopOpacity={0.15} />
+          <stop offset="50%" stopColor={fill} stopOpacity={0.5} />
+          <stop offset="100%" stopColor={fill} stopOpacity={0.95} />
+        </linearGradient>
+        <linearGradient id={`${gradientId}-liquidRight`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={fill} stopOpacity={0.05} />
+          <stop offset="100%" stopColor={fill} stopOpacity={0.7} />
+        </linearGradient>
+        <linearGradient id={`${gradientId}-glassReflex`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity={0.4} />
+          <stop offset="20%" stopColor="#ffffff" stopOpacity={0.1} />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      
+      {/* --- Outer Glass Back/Inside Walls --- */}
+      <path d={`M${x + width},${y} l${depth},-${depth} v${height} l-${depth},${depth} Z`} fill="rgba(255,255,255,0.03)" />
+      <path d={`M${x},${y} l${depth},-${depth} h${width} l-${depth},${depth} Z`} fill="rgba(255,255,255,0.03)" />
+      
+      {/* --- Inner Liquid Volume --- */}
+      <g>
+         {/* Front face of liquid */}
+         <path d={`M${lx},${ly} v${lh} h${lw} v-${lh} Z`} fill={`url(#${gradientId}-liquidFront)`} />
+         {/* Right face of liquid */}
+         <path d={`M${lx + lw},${ly} l${ld},-${ld} v${lh} l-${ld},${ld} Z`} fill={`url(#${gradientId}-liquidRight)`} />
+         {/* Top surface of liquid */}
+         <path d={`M${lx},${ly} l${ld},-${ld} h${lw} l-${ld},${ld} Z`} fill={fill} fillOpacity={0.5} />
+         
+         {/* Rising Bubbles */}
+         <circle cx={lx + lw * 0.3} cy={ly + lh - 2} r={1} fill="#ffffff" opacity={0.6}>
+            <animate attributeName="cy" values={`${ly + lh};${ly + 2}`} dur="2s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0;0.6;0" dur="2s" repeatCount="indefinite" />
+         </circle>
+         <circle cx={lx + lw * 0.7} cy={ly + lh - 2} r={0.8} fill="#ffffff" opacity={0.4}>
+            <animate attributeName="cy" values={`${ly + lh};${ly + 2}`} dur="2.5s" repeatCount="indefinite" begin="0.5s" />
+            <animate attributeName="opacity" values="0;0.4;0" dur="2.5s" repeatCount="indefinite" begin="0.5s" />
+         </circle>
+         <circle cx={lx + lw * 0.5} cy={ly + lh - 2} r={1.5} fill="#ffffff" opacity={0.5}>
+            <animate attributeName="cy" values={`${ly + lh};${ly + 2}`} dur="1.8s" repeatCount="indefinite" begin="1s" />
+            <animate attributeName="opacity" values="0;0.5;0" dur="1.8s" repeatCount="indefinite" begin="1s" />
+         </circle>
+      </g>
+      
+      {/* --- Outer Glass Front Shell --- */}
+      {/* Front Face Outline */}
+      <path d={`M${x},${y} v${height} h${width} v-${height} Z`} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth={1} />
+      {/* Right Face Outline */}
+      <path d={`M${x + width},${y} l${depth},-${depth} v${height} l-${depth},${depth} Z`} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth={1} />
+      {/* Top Face Outline */}
+      <path d={`M${x},${y} l${depth},-${depth} h${width} l-${depth},${depth} Z`} fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth={1} />
+      
+      {/* Glassy highlight stripe on the left edge */}
+      <path d={`M${x},${y} v${height} h${width/2.5} v-${height} Z`} fill={`url(#${gradientId}-glassReflex)`} />
+      
+      {/* Edges Specular Highlights */}
+      <line x1={x} y1={y} x2={x+width} y2={y} stroke="rgba(255,255,255,0.6)" strokeWidth={1} />
+      <line x1={x} y1={y} x2={x+depth} y2={y-depth} stroke="rgba(255,255,255,0.4)" strokeWidth={1} />
+      
+      {/* Glowing base line spread */}
+      <line x1={x-2} y1={y+height} x2={x+width+depth+2} y2={y+height} stroke={fill} strokeWidth={2} strokeOpacity={0.8} filter="blur(2px)" />
+
+      {/* Subtle container breathing animation */}
       <animate attributeName="opacity" values="0.85; 1; 0.85" dur={`${2.5 + (index % 3) * 0.5}s`} repeatCount="indefinite" />
     </g>
   );
@@ -48,7 +110,37 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       }}
       className={cn("relative flex flex-col overflow-hidden rounded-[16px] border-t border-t-blue-400/30 border-r border-r-blue-500/20 border-b border-b-black/40 border-l border-l-blue-500/20 bg-gradient-to-br from-slate-800/80 via-blue-900/40 to-[rgba(10,20,35,0.8)] backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)]", className)}
     >
+      <style>{`
+        @keyframes containerLiquidWave {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes floatUp {
+          0% { transform: translateY(0); opacity: 0; }
+          50% { opacity: 0.6; }
+          100% { transform: translateY(-120px); opacity: 0; }
+        }
+      `}</style>
       
+      {/* Liquid background fill */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+         <div className="absolute bottom-0 left-0 w-full h-[35%] opacity-20 mix-blend-screen overflow-hidden rounded-b-[16px]">
+             <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-500/40 to-transparent"></div>
+             <svg className="absolute w-[200%] h-[40px] -top-[10px] left-0 drop-shadow-[0_-2px_10px_rgba(59,130,246,0.5)]" style={{ animation: 'containerLiquidWave 8s linear infinite' }} viewBox="0 0 800 40" preserveAspectRatio="none">
+                <path d="M0,20 C100,0 300,40 400,20 C500,0 700,40 800,20 L800,40 L0,40 Z" fill="rgba(59,130,246,0.4)"/>
+             </svg>
+             <svg className="absolute w-[200%] h-[40px] -top-[5px] left-0" style={{ animation: 'containerLiquidWave 12s linear infinite reverse' }} viewBox="0 0 800 40" preserveAspectRatio="none">
+                <path d="M0,20 C100,40 300,0 400,20 C500,40 700,0 800,20 L800,40 L0,40 Z" fill="rgba(59,130,246,0.6)"/>
+             </svg>
+             {/* Bubbles */}
+             <div className="absolute bottom-2 left-[20%] w-1 h-1 bg-white rounded-full" style={{ animation: 'floatUp 3s infinite ease-in' }} />
+             <div className="absolute bottom-6 left-[60%] w-0.5 h-0.5 bg-white rounded-full" style={{ animation: 'floatUp 2.5s infinite ease-in 1s' }} />
+             <div className="absolute bottom-0 left-[80%] w-1 h-1 bg-white rounded-full" style={{ animation: 'floatUp 4s infinite ease-in 0.5s' }} />
+         </div>
+         {/* Glass Reflex on sides */}
+         <div className="absolute inset-x-0 bottom-0 h-full border-b-[8px] border-l-[3px] border-r-[3px] border-white/5 rounded-[16px] pointer-events-none" />
+      </div>
+
       {/* Realistic External Light Source Cast */}
       <div className="pointer-events-none absolute inset-0 z-10"
            style={{ background: 'radial-gradient(circle at -5% -5%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.04) 30%, transparent 60%)' }} />
@@ -72,10 +164,10 @@ function Panel({ title, icon, children, className, actions }: PanelProps) {
       {/* Header */}
       <div className="relative z-20 flex items-center justify-between px-5 pt-4 pb-2">
         <div className="relative flex items-center gap-3">
-           <div className="relative flex items-center justify-center text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">
+           <div className="relative flex items-center justify-center text-blue-300 rounded border border-blue-400/50 bg-blue-500/20 p-1.5 shadow-[0_0_12px_rgba(59,130,246,0.8)]">
              <div className="z-10">{icon}</div>
            </div>
-           <span className="font-sans text-sm font-semibold tracking-wider text-slate-200 uppercase">{title}</span>
+           <span className="font-sans text-[15px] font-bold tracking-wider text-slate-100 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{title}</span>
         </div>
         {actions && <div className="relative z-10 flex gap-2 items-center">{actions}</div>}
       </div>
@@ -191,7 +283,7 @@ export function RightSidebar() {
       </div>
 
       {/* 预警处置率 (Alert Handling Rate) */}
-      <Panel title="预警处置率" icon={<ShieldAlert size={14} strokeWidth={2.5}/>}>
+      <Panel title="预警处置率" icon={<ShieldAlert size={18} strokeWidth={2.5}/>}>
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between text-[13px] text-slate-400">
             <div className="flex items-center gap-2">
@@ -274,7 +366,7 @@ export function RightSidebar() {
       </Panel>
 
       {/* 预警监测 (Alert Monitoring) */}
-      <Panel title="预警监测" icon={<Bell size={14} strokeWidth={2.5}/>} className="flex-1">
+      <Panel title="预警监测" icon={<Bell size={18} strokeWidth={2.5}/>} className="flex-1">
          <div className="mb-4 flex gap-1 rounded bg-slate-800/80 border border-slate-600/30 p-0.5 text-[13px] text-slate-400">
             <button className="rounded bg-blue-500/20 px-4 py-1 text-blue-300 shadow-[0_0_8px_rgba(59,130,246,0.2)]">预警类</button>
             <button className="rounded px-4 py-1 hover:text-slate-200 hover:bg-slate-700/50 transition-colors">提醒类</button>
