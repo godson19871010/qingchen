@@ -7,8 +7,9 @@ import ReactDOMServer from 'react-dom/server';
 
 const rippleKeyframes = `
   @keyframes mapRipple {
-    0% { transform: translate(-50%, -50%) rotateX(72deg) scale(0.1); opacity: 0.8; border-width: 2px; }
-    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(2.5); opacity: 0; border-width: 0px; }
+    0% { transform: translate(-50%, -50%) rotateX(72deg) scale(0.2); opacity: 0.8; border-width: 2px; }
+    50% { opacity: 0.4; border-width: 1px; }
+    100% { transform: translate(-50%, -50%) rotateX(72deg) scale(4); opacity: 0; border-width: 0px; }
   }
 `;
 
@@ -38,8 +39,9 @@ function createCustomIcon(name: string, type: string, active: boolean = false) {
         
         <!-- Ripple effect branching from map surface (3D perspective) -->
         <div class="absolute bottom-[0px] left-1/2 w-0 h-0 pointer-events-none" style="perspective: 1000px;">
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid border-[2px] opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 3s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 0s; box-shadow: 0 0 20px ${getMainColor()} inset, 0 0 20px ${getMainColor()}"></div>
-           <div class="absolute top-[50%] left-[50%] rounded-full border-solid border-[2px] opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 3s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 1.5s; box-shadow: 0 0 20px ${getMainColor()} inset, 0 0 20px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 0s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 2s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
+           <div class="absolute top-[50%] left-[50%] rounded-full border-solid opacity-0" style="width: 80px; height: 80px; border-color: ${getMainColor()}; animation: mapRipple 6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; animation-delay: 4s; box-shadow: 0 0 10px ${getMainColor()} inset, 0 0 10px ${getMainColor()}"></div>
         </div>
 
         <!-- Pin Arrow pointing to map -->

@@ -45,27 +45,27 @@ export function Header() {
       </div>
       {/* Left decoration */}
       <div className="flex w-[300px] items-center gap-2 opacity-80 pt-2 pointer-events-auto">
-        <div className="h-1.5 w-12 -skew-x-[30deg] bg-gradient-to-r from-transparent to-teal-500"></div>
-        <div className="h-1.5 w-6 -skew-x-[30deg] bg-teal-500"></div>
-        <div className="h-1.5 w-3 -skew-x-[30deg] bg-teal-500/60"></div>
+        <div className="h-1.5 w-12 -skew-x-[30deg] bg-gradient-to-r from-transparent to-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></div>
+        <div className="h-1.5 w-6 -skew-x-[30deg] bg-cyan-400"></div>
+        <div className="h-1.5 w-3 -skew-x-[30deg] bg-cyan-400/60"></div>
       </div>
       
       {/* Title */}
       <div className="relative flex flex-col items-center justify-center pt-2 pointer-events-auto">
-        <h1 className="relative z-10 flex items-center justify-center gap-6 text-[#ffffff] drop-shadow-[0_2px_15px_rgba(255,255,255,0.4)] pb-1">
+        <h1 className="relative z-10 flex items-center justify-center gap-6 text-slate-200 drop-shadow-[0_2px_10px_rgba(34,211,238,0.3)] pb-1">
           <span className="text-[28px] font-bold tracking-[0.25em]">数 智 云</span>
-          <span className="text-[34px] font-bold tracking-[0.2em] px-4 text-transparent bg-clip-text bg-gradient-to-b from-white to-cyan-100 drop-shadow-[0_0_12px_rgba(255,255,255,0.8)]">清 尘</span>
+          <span className="text-[36px] font-bold tracking-[0.2em] px-4 text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 via-white to-cyan-300 drop-shadow-[0_0_15px_rgba(6,182,212,0.6)]">清 尘</span>
           <span className="text-[28px] font-bold tracking-[0.25em]">防 控 平 台</span>
         </h1>
       </div>
       
       {/* Right controls */}
-      <div className="flex w-[300px] items-center justify-end gap-3 text-teal-300 pt-2 pointer-events-auto">
-        <button className="flex items-center gap-2 rounded border border-teal-500/40 bg-[#0a1f2c]/80 px-4 py-1.5 text-[13px] font-medium transition-all hover:bg-teal-800/50 hover:border-teal-400">
+      <div className="flex w-[300px] items-center justify-end gap-3 text-cyan-300 pt-2 pointer-events-auto">
+        <button className="flex items-center gap-2 rounded border border-slate-500/40 bg-slate-800/80 px-4 py-1.5 text-[13px] font-medium transition-all hover:bg-slate-700 hover:border-cyan-400/50 shadow-[inset_0_0_8px_rgba(0,0,0,0.2)]">
           <Download size={16} />
           <span>控件下载</span>
         </button>
-        <button className="rounded border border-teal-500/40 bg-[#0a1f2c]/80 p-1.5 transition-all hover:bg-teal-800/50 hover:border-teal-400">
+        <button className="rounded border border-slate-500/40 bg-slate-800/80 p-1.5 transition-all hover:bg-slate-700 hover:border-cyan-400/50 shadow-[inset_0_0_8px_rgba(0,0,0,0.2)]">
           <Maximize size={18} />
         </button>
       </div>

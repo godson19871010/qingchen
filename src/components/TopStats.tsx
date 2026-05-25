@@ -12,25 +12,34 @@ interface StatCardProps {
 function StatCard({ title, value, icon, delay = 0 }: StatCardProps) {
   return (
     <div 
-      className="relative flex items-center justify-center gap-5 overflow-hidden rounded-2xl border-t border-t-cyan-100/50 border-r border-r-cyan-200/20 border-b border-b-black/40 border-l border-l-cyan-300/10 bg-gradient-to-br from-[#0e273a]/40 via-[#081825]/40 to-[#040e14]/40 py-4 px-4 shadow-[0_4px_30px_rgba(0,0,0,0.3)] backdrop-blur-md"
+      className="relative flex items-center justify-center gap-5 overflow-hidden rounded-2xl border-t border-t-slate-300/40 border-r border-r-slate-400/20 border-b border-b-black/60 border-l border-l-slate-400/20 bg-gradient-to-br from-slate-800/60 via-slate-900/60 to-[rgba(5,10,15,0.7)] py-4 px-4 shadow-[0_4px_30px_rgba(0,0,0,0.4)] backdrop-blur-md"
     >
-      {/* Extremely subtle ambient top-left glow */}
-      <div className="pointer-events-none absolute top-[-20%] left-[-20%] w-[50%] h-[50%] z-10 mix-blend-overlay"
-           style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)' }} />
+      {/* Realistic External Light Source Cast */}
+      <div className="pointer-events-none absolute inset-0 z-10"
+           style={{ background: 'radial-gradient(circle at -5% -5%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.04) 30%, transparent 60%)' }} />
            
-      {/* Edge reflections */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-white/20 via-white/5 to-transparent z-10" />
-      <div className="pointer-events-none absolute top-0 left-0 bottom-0 w-[1px] bg-gradient-to-b from-white/20 via-white/5 to-transparent z-10" />
-      
-      {/* Slight inner rim */}
-      <div className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.1)]" />
+      {/* Soft Light Rays Passing Over Glass */}
+      <div className="pointer-events-none absolute inset-0 z-20 mix-blend-screen opacity-60"
+           style={{ 
+             background: 'conic-gradient(from 90deg at -10% -10%, transparent 0deg, rgba(255,255,255,0.1) 15deg, rgba(255,255,255,0.2) 30deg, transparent 45deg, rgba(255,255,255,0.1) 60deg, transparent 80deg)',
+             WebkitMaskImage: 'radial-gradient(circle at -10% -10%, black 10%, transparent 65%)',
+             maskImage: 'radial-gradient(circle at -10% -10%, black 10%, transparent 65%)'
+           }} 
+      />
 
-      <div className="relative z-20 flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-xl border border-teal-300/30 bg-teal-900/30 text-teal-200 shadow-[inset_0_0_15px_rgba(56,189,248,0.2)]">
+      {/* Highlighted Edges Hit By Light */}
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-slate-200/50 via-slate-300/10 to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 left-0 bottom-[30%] w-[1px] bg-gradient-to-b from-slate-200/50 via-slate-300/10 to-transparent z-10" />
+      
+      {/* Inner Bevel for Metallic Depth */}
+      <div className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.2),inset_0_0_20px_rgba(255,255,255,0.02),inset_-1px_-1px_3px_rgba(0,0,0,0.5)]" />
+
+      <div className="relative z-20 flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-900/40 to-cyan-950/40 text-cyan-300 shadow-[inset_0_0_15px_rgba(6,182,212,0.2)]">
         {icon}
       </div>
       <div className="flex flex-col z-20 w-24">
-        <div className="text-[13px] font-medium text-teal-50/90 mb-0.5">{title}</div>
-        <div className="text-[32px] font-bold leading-none text-white font-mono drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]">
+        <div className="text-[13px] font-medium text-slate-400 mb-0.5">{title}</div>
+        <div className="text-[32px] font-bold leading-none bg-gradient-to-r from-cyan-300 to-emerald-400 bg-clip-text text-transparent font-mono drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">
           {value}
         </div>
       </div>
