@@ -196,6 +196,7 @@ export function LeftSidebar() {
       <Panel 
         title="巡逻打卡" 
         icon={<MapPin size={18} strokeWidth={2.5}/>}
+        className="flex-1 min-h-[220px]"
         actions={
           <div className="flex gap-1 rounded bg-slate-800/80 border border-slate-600/30 p-0.5">
              <button className="rounded bg-blue-600/30 px-2 py-0.5 text-[11px] text-blue-100 shadow-[0_0_8px_rgba(59,130,246,0.3)]">巡逻打卡</button>
